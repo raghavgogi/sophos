@@ -7,9 +7,6 @@
         },
         "subnetRef": {
             "type": "string"
-        },
-        "networkSecurityGroupId": {
-            "type": "string"
         }
     },
     "resources": [
