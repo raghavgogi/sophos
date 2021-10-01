@@ -1,0 +1,49 @@
+apiVersion: v1
+baseDomain: debinternal.cloud 
+controlPlane: 
+  hyperthreading: Enabled   
+  name: master
+  platform:
+    azure:
+      osDisk:
+        diskSizeGB: 1024 
+      type: Standard_D8s_v3
+  replicas: 3
+compute: 
+- hyperthreading: Enabled 
+  name: worker
+  platform:
+    azure:
+      type: Standard_D8s_v3
+      osDisk:
+        diskSizeGB: 512 
+      zones: 
+      - "1"
+      - "2"
+      - "3"
+  replicas: 6
+metadata:
+  name: mgmt-sp-prod1 
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 172.20.248.0/23
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  azure:
+    region: Southeast Asia 
+    baseDomainResourceGroupName: be-ds-singapore-prod-dns-rg 
+    networkResourceGroupName: be-ds-singapore-prod-vnet-rg 
+    virtualNetwork: be-ds-singapore-prod-vnet 
+    controlPlaneSubnet: be-ds-ocp-controlplane-subnet1 
+    computeSubnet: be-ds-ocp-compute-subnet1 
+pullSecret: '{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K2pnb2dpcjFkYm9qZzY5aGRmZXN6c296b2N0YnF4Y25rNDpYQUpGNFo0SEZYSTRTQlkwRU4yQllHUUxKUU1FNUVPUFNXSEdaUDJDQVZaNE5BSFpISzNYVlBGNDVMQzY4RjhO","email":"raghavendra.gogi@jci.com"},"quay.io":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K2pnb2dpcjFkYm9qZzY5aGRmZXN6c296b2N0YnF4Y25rNDpYQUpGNFo0SEZYSTRTQlkwRU4yQllHUUxKUU1FNUVPUFNXSEdaUDJDQVZaNE5BSFpISzNYVlBGNDVMQzY4RjhO","email":"raghavendra.gogi@jci.com"},"registry.connect.redhat.com":{"auth":"NTIzODQzMDJ8dWhjLTFkQk9qRzY5aGRGZVN6c29aT2NUYnFYY05LNDpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmpNVEZpTm1Zd01UVTBaVEkwTkdVeFltSXdNREV6TldRNE56UTROV0k0TlNKOS5zTGY5QldtVy1kM212NU1nd0phZDQ2cTFWOWFxLVdVZWttM2MxZXhSS2lURmhiZUY4WTNabkNZU0ZkcG5BZlNhbjFub3ROWUFWMkdqVndvV0hEZmU0eTUxdUU2U0s3eFdQM0w2Q0VnZmRUVHRZS3V0djZVdm4tanNSejQ5WFBnQkRJSVV0MFFjYVRiOUdIV004ME16aGdEZjNMT29UUlJlWWQ0LTdvQ0JpZ2ZHSjJZNlZmSGk4a0FRU1RLd0xSWGNhZTh6REE0cEtTN0dVN2VxVGJJTUlNNnFkYXBRSndLaThqNV9iS3lFcndLQ1dib2NWa0d6TE14TmdOWVgweW5tVUxTbExVbl9WU2YxcG43bUY2Ql9HUm1PZVBNYmZHWGNBU3RsdGY5WGNrQ3YzUVlaV1RCMGMxTERTTUpEZ1hDMDhJdTBPanRjM3dzNzVwREhncWg1U05pQklZWjBETHhOTWw5TXNhYWt0eklyUWI0ZS1EVWF1WFFLbjctdmc4TDNZa1FLelg2cUlhMHhuQmgwRE5lVWR1bjRia0E1MWlVSXUzUXVqS2xyZy12bGhacHVhQktTaDF5TmtLRFdoZHFXQkpXNjlIX1FFZEhXbkNqbEQ2bERzWWNXYTJTY2R5WV9XNjRnWEdoMUJWV0U0OGJwdU01a3IyTUNhYWJSMzZ6TEwwRF9FTEhjR0djcUJObkRiVWd2VGdwXzhNTE9ObTVHbGFkbU5yajdwckdnUURUVXdpT1JLNFNJWnJGZUVoZEJrTmpjYVNKQkJCU2RoZG81clRBNHpObEF3d2o4QnVxUDAxLVE5U3dhN2tNN09UR0NKWWhXa1hJWGtqU0RmVjUyUHZjeEdBdGZuTG5tbGVLSWFNSEdhNlRHMmlPT19rRkc5aE41RzlzMV9Nbw==","email":"raghavendra.gogi@jci.com"},"registry.redhat.io":{"auth":"NTIzODQzMDJ8dWhjLTFkQk9qRzY5aGRGZVN6c29aT2NUYnFYY05LNDpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmpNVEZpTm1Zd01UVTBaVEkwTkdVeFltSXdNREV6TldRNE56UTROV0k0TlNKOS5zTGY5QldtVy1kM212NU1nd0phZDQ2cTFWOWFxLVdVZWttM2MxZXhSS2lURmhiZUY4WTNabkNZU0ZkcG5BZlNhbjFub3ROWUFWMkdqVndvV0hEZmU0eTUxdUU2U0s3eFdQM0w2Q0VnZmRUVHRZS3V0djZVdm4tanNSejQ5WFBnQkRJSVV0MFFjYVRiOUdIV004ME16aGdEZjNMT29UUlJlWWQ0LTdvQ0JpZ2ZHSjJZNlZmSGk4a0FRU1RLd0xSWGNhZTh6REE0cEtTN0dVN2VxVGJJTUlNNnFkYXBRSndLaThqNV9iS3lFcndLQ1dib2NWa0d6TE14TmdOWVgweW5tVUxTbExVbl9WU2YxcG43bUY2Ql9HUm1PZVBNYmZHWGNBU3RsdGY5WGNrQ3YzUVlaV1RCMGMxTERTTUpEZ1hDMDhJdTBPanRjM3dzNzVwREhncWg1U05pQklZWjBETHhOTWw5TXNhYWt0eklyUWI0ZS1EVWF1WFFLbjctdmc4TDNZa1FLelg2cUlhMHhuQmgwRE5lVWR1bjRia0E1MWlVSXUzUXVqS2xyZy12bGhacHVhQktTaDF5TmtLRFdoZHFXQkpXNjlIX1FFZEhXbkNqbEQ2bERzWWNXYTJTY2R5WV9XNjRnWEdoMUJWV0U0OGJwdU01a3IyTUNhYWJSMzZ6TEwwRF9FTEhjR0djcUJObkRiVWd2VGdwXzhNTE9ObTVHbGFkbU5yajdwckdnUURUVXdpT1JLNFNJWnJGZUVoZEJrTmpjYVNKQkJCU2RoZG81clRBNHpObEF3d2o4QnVxUDAxLVE5U3dhN2tNN09UR0NKWWhXa1hJWGtqU0RmVjUyUHZjeEdBdGZuTG5tbGVLSWFNSEdhNlRHMmlPT19rRkc5aE41RzlzMV9Nbw==","email":"raghavendra.gogi@jci.com"}}}' 
+fips: false 
+sshKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCxai5PwZckR05tibrdgJYxeaGu20hlc1tTA2rfXIpfmYKuk2ojn9JrCA3ikCXcog5PY4C2zQdD7ZuG+kjhksMAF2XSHX8Kht/dCA9VdCD51LR4PAWhZfH8JqUuocU0zzNuSNgGVo7dh/+TpBJ9LDOmMk
+NxA5RCnLCqS/9cLyxGlzbHGcpbzK/ZJdijW2G3sUABstESVJLqPy2mo+IuN2wS3uwQp2Hqq9tHNrIGt7JGe5WUINGIQvcTZGWKzYhcWaGW0veba2iLwHm3dI8b0FHH7udMCNaRXPbvS85EBT+NxxSsf9Dzxr9ngfuYTGMmuhkJvuHcF+B2hSuPBZjOP4mZ
+91Vnq5Q5tYAbX405QeFFkmK2g95DyovBanXW9i5DfIGQHlxhd5wtHfNfyDrM/GOoJ1/d3f60DlLNGpdoakYbMa00D6rH+04aa5Ygb/KrlSirIQZU1yHBUxtQ8TgoWvGsCd1XNQCD0aJ8Wf3w7h0F3tXM9kJR1x/No4AoCTInTBE=
+publish: Internal
